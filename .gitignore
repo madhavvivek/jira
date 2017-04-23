@@ -25,8 +25,3 @@ hs_err_pid*
 
 # ignore kotlin
 .idea/kotlinc.xml
-
-.gitignore
-build/
-src/main/resources/
-src/test/
