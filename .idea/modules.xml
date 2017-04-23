@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.jira.client.iml" filepath="$PROJECT_DIR$/.idea/modules/org.jira.client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.jira.client_main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.jira.client_main.iml" group="org.jira.client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.jira.client_test.iml" filepath="$PROJECT_DIR$/.idea/modules/org.jira.client_test.iml" group="org.jira.client" />
+    </modules>
+  </component>
+</project>
