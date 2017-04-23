@@ -5,7 +5,7 @@ import net.rcarz.jiraclient.*;
 public class Example {
 
     public static void main(String[] args) {
-        BasicCredentials creds = new BasicCredentials("vmadhav", "enter password");
+        BasicCredentials creds = new BasicCredentials("enter username", "enter password");
         JiraClient jira = new JiraClient("https://jira.esteco.com/", creds);
 
         try {
