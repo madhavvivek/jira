@@ -5,8 +5,9 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 
 public class EncryptionTest {
 
@@ -24,7 +25,7 @@ public class EncryptionTest {
     public void testEncryption() throws Exception {
         String encrypted = propertyEncryptor.encrypt(PLAIN_TEXT);
 
-        assertNotEquals(PLAIN_TEXT, encrypted);
+        assertThat(PLAIN_TEXT, not(encrypted));
     }
 
     @Test

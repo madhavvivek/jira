@@ -8,10 +8,15 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.awt.*;
+import java.io.IOException;
 
-public class AddRectangles {
+public class StoryCards {
 
-    public void doIt(String message, String outfile) throws Exception {
+    public void createEmpty(String outfile) {
+        createFourCardsLandscapeMode(outfile);
+    }
+
+    private void createFourCardsLandscapeMode(String outfile) {
         PDDocument doc = null;
         try {
             doc = new PDDocument();
@@ -25,25 +30,6 @@ public class AddRectangles {
 
             //Setting the non stroking color
             contentStream.setNonStrokingColor(Color.ORANGE);
-
-            //Drawing a rectangle
-            // contentStream.addRect(200, 650, 10000, 10000);
-            // contentStream.addRect(200, 650, 100, 100);
-
-            // This is for landscape with one bug rectangle
-            // contentStream.addRect(25, 25, 545, 790);
-
-            /*
-            This is for landscape with four rectangles
-            // second quadrant
-            contentStream.addRect(25, 25, 272, 395);
-            // first quadrant
-            contentStream.addRect(25, 420, 272, 395);
-            // third quadrant
-            contentStream.addRect(297, 25, 272, 395);
-            // fourth quadrant
-            contentStream.addRect(297, 420, 272, 395);
-            */
 
             // Four story cards
             contentStream.addRect(25, 25, 272, 395);
@@ -78,15 +64,16 @@ public class AddRectangles {
 
             //Saving the document
             doc.save(outfile);
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             if (doc != null) {
-                doc.close();
+                try {
+                    doc.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        AddRectangles app = new AddRectangles();
-        app.doIt("This is a message!", "/home/vivek/test-rectangle.pdf");
     }
 }

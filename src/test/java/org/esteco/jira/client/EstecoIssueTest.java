@@ -28,8 +28,9 @@ public class EstecoIssueTest {
         props.load(inputStream);
         String userName = props.getProperty("jira.username");
         String password = props.getProperty("jira.password");
+        String url = props.getProperty("jira.url");
         credentials = new BasicCredentials(userName, password);
-        jiraClient = new JiraClient("https://jira.esteco.com/", credentials);
+        jiraClient = new JiraClient(url, credentials);
     }
 
     @Test

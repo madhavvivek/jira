@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="org.jira.client_main" target="1.8" />
       <module name="org.jira.client_test" target="1.8" />
+      <module name="research-org.jira.client_main" target="1.8" />
+      <module name="research-org.jira.client_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
