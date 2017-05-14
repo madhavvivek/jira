@@ -1,7 +1,7 @@
 package org.esteco.jira.pdf;
 
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.esteco.jira.client.DefaultEstecoIssue;
+import org.esteco.jira.client.EstecoIssue;
 import rst.pdfbox.layout.elements.*;
 import rst.pdfbox.layout.elements.Frame;
 import rst.pdfbox.layout.elements.render.VerticalLayoutHint;
@@ -13,6 +13,7 @@ import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 public class Frames {
 
@@ -24,17 +25,10 @@ public class Frames {
     private static final String STORY = "Story";
     private static final String BOLD_MARKUP = "*";
     private static final int FONT_SIZE_NORMAL = 20;
+    public static final String PRIORITY_LABEL = "Priority:";
 
-    private final DefaultEstecoIssue defaultEstecoIssue;
 
-    public Frames(DefaultEstecoIssue defaultEstecoIssue) {
-        this.defaultEstecoIssue = defaultEstecoIssue;
-    }
-
-    private void doIt() throws IOException {
-        PageFormat a4Landscape = PageFormat.with().A4().landscape().margins(10, 10, 10, 10).build();
-        Document document = new Document(a4Landscape);
-
+    private Document createFirstCard(Document document, EstecoIssue estecoIssue) throws IOException {
         Stroke stroke = new Stroke();
         Paragraph paragraph = new Paragraph();
         Frame frame = new Frame(paragraph);
@@ -46,10 +40,10 @@ public class Frames {
         document.add(frame, VerticalLayoutHint.CENTER);
 
         ImageElement image;
-        if (defaultEstecoIssue.getIssueType().getName().equals(STORY)) {
+        if (estecoIssue.getIssueTypeName().equals(STORY)) {
             image = new ImageElement(Frames.class.getResourceAsStream("story.gif"));
         } else {
-            String issueTypeIconUrl = defaultEstecoIssue.getIssueTypeIconUrl();
+            String issueTypeIconUrl = estecoIssue.getIssueTypeIconUrl();
             image = new ImageElement(Frames.class.getResourceAsStream("story.gif"));
         }
         image.setWidth(image.getWidth() / 10);
@@ -66,11 +60,11 @@ public class Frames {
         document.add(icon, new VerticalLayoutHint());
 
         Paragraph storyNumber = new Paragraph();
-        String issuePriority = defaultEstecoIssue.getPriority().getName();
+        String issuePriority = estecoIssue.getPriorityName();
         if (PRIORITY_BLOCKER.equals(issuePriority)) {
-            storyNumber.addMarkup(COLOUR_RED_MARKUP + BOLD_MARKUP + defaultEstecoIssue.getKey() + BOLD_MARKUP, FONT_SIZE, BaseFont.Helvetica);
+            storyNumber.addMarkup(COLOUR_RED_MARKUP + BOLD_MARKUP + estecoIssue.getKey() + BOLD_MARKUP, FONT_SIZE, BaseFont.Helvetica);
         } else {
-            storyNumber.addText(defaultEstecoIssue.getKey(), FONT_SIZE, PDType1Font.HELVETICA_BOLD);
+            storyNumber.addText(estecoIssue.getKey(), FONT_SIZE, PDType1Font.HELVETICA_BOLD);
         }
         paragraph.setAlignment(Alignment.Right);
         paragraph.setMaxWidth(310);
@@ -92,7 +86,7 @@ public class Frames {
         body.setMargin(15, 0, 15, 0);
         document.add(body, VerticalLayoutHint.LEFT);
 
-        String issueSummary = defaultEstecoIssue.getSummary();
+        String issueSummary = estecoIssue.getSummary();
         Paragraph summaryParagraph = new Paragraph();
         Frame summaryBody = new Frame(summaryParagraph);
         summaryBody.setShape(new CardRect(25, 310, 385, 180));
@@ -102,7 +96,7 @@ public class Frames {
         document.add(summaryBody, new VerticalLayoutHint(Alignment.Left, FONT_SIZE_NORMAL, 0, 0, 0));
 
         Paragraph priorityLabel = new Paragraph();
-        priorityLabel.addText("Priority:", FONT_SIZE_NORMAL, BaseFont.Helvetica.getItalicFont());
+        priorityLabel.addText(PRIORITY_LABEL, FONT_SIZE_NORMAL, BaseFont.Helvetica.getItalicFont());
         paragraph.setAlignment(Alignment.Left);
         Frame pbody = new Frame(priorityLabel);
         pbody.setShape(new CardRect(25, 310, 385, 180));
@@ -122,19 +116,46 @@ public class Frames {
         } else {
             priorityParagraph.addText(issuePriority, FONT_SIZE_NORMAL, PDType1Font.HELVETICA_BOLD);
         }
-
         document.add(priorityBody, new VerticalLayoutHint(Alignment.Left, FONT_SIZE_NORMAL, 0, 0, 0));
 
+        return document;
+    }
+
+    private void save(Document document) throws IOException {
         final OutputStream outputStream = new FileOutputStream("d:/frames.pdf");
         document.save(outputStream);
     }
 
-    public static void main(String[] args) throws IOException {
-        Frames frames = new Frames(null);
-        frames.doIt();
+    private Document createSecondCard(Document document, EstecoIssue issue2) {
+        return document;
     }
 
-    public void createCard() throws IOException {
-        doIt();
+    public void createCards(ArrayList<EstecoIssue> issuesList) throws IOException {
+        PageFormat a4Landscape = PageFormat.with().A4().landscape().margins(10, 10, 10, 10).build();
+        Document document = new Document(a4Landscape);
+
+        for (int counter = 0; counter < 4; counter++) {
+            document = createIndividualCards(issuesList, document, counter);
+        }
+        save(document);
+    }
+
+    private Document createIndividualCards(ArrayList<EstecoIssue> issuesList, Document document, int counter) throws IOException {
+        EstecoIssue issue = issuesList.get(counter);
+        switch (counter) {
+            case 0:
+                document = createFirstCard(document, issue);
+                break;
+            case 1:
+                document = createFirstCard(document, issue);
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+        return document;
     }
 }

@@ -46,6 +46,11 @@ public class DefaultEstecoIssue implements EstecoIssue {
     }
 
     @Override
+    public String getPriorityName() {
+        return priority.getName();
+    }
+
+    @Override
     public String getPriorityIconUrl() {
         return priorityIconUrl;
     }
@@ -53,6 +58,16 @@ public class DefaultEstecoIssue implements EstecoIssue {
     @Override
     public IssueType getIssueType() {
         return issueType;
+    }
+
+    @Override
+    public String getIssueTypeName() {
+        return issueType.getName();
+    }
+
+    @Override
+    public String getIssueTypeDescription() {
+        return issueType.getDescription();
     }
 
     @Override
@@ -66,8 +81,38 @@ public class DefaultEstecoIssue implements EstecoIssue {
     }
 
     @Override
+    public String getAssigneeName() {
+        return assignee.getName();
+    }
+
+    @Override
+    public String getAssigneeDisplayName() {
+        return assignee.getDisplayName();
+    }
+
+    @Override
+    public String getAssigneeEmail() {
+        return assignee.getEmail();
+    }
+
+    @Override
     public User getReporter() {
         return reporter;
+    }
+
+    @Override
+    public String getReporterName() {
+        return reporter.getName();
+    }
+
+    @Override
+    public String getReporterDisplayName() {
+        return reporter.getDisplayName();
+    }
+
+    @Override
+    public String getReporterEmail() {
+        return reporter.getEmail();
     }
 
     @Override

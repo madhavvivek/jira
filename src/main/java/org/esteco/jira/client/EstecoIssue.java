@@ -15,15 +15,33 @@ public interface EstecoIssue {
 
     Priority getPriority();
 
+    String getPriorityName();
+
     String getPriorityIconUrl();
 
     IssueType getIssueType();
+
+    String getIssueTypeName();
+
+    String getIssueTypeDescription();
 
     String getIssueTypeIconUrl();
 
     User getAssignee();
 
+    String getAssigneeName();
+
+    String getAssigneeDisplayName();
+
+    String getAssigneeEmail();
+
     User getReporter();
+
+    String getReporterName();
+
+    String getReporterDisplayName();
+
+    String getReporterEmail();
 
     List<String> getLabels();
 
