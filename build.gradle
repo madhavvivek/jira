@@ -7,12 +7,15 @@ sourceCompatibility = 1.8
 
 repositories {
     maven { url "http://uk.maven.org/maven2" }
+    maven { url "https://jitpack.io" }
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     compile group:'net.rcarz', name:'jira-client', version:'0.5'
     compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.5'
     compile group: 'org.jasypt', name: 'jasypt', version: '1.9.2'
+    compile 'com.github.ralfstuckert.pdfbox-layout:pdfbox2-layout:0.9.0'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }

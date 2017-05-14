@@ -8,6 +8,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class AddRectangles {
 
@@ -77,7 +78,7 @@ public class AddRectangles {
             contentStream.close();
 
             //Saving the document
-            doc.save(outfile);
+            savePDF(outfile, doc);
         } finally {
             if (doc != null) {
                 doc.close();
@@ -85,8 +86,70 @@ public class AddRectangles {
         }
     }
 
+    public PDDocument doItSecondQuadrant(String message, String outfile) throws Exception {
+        PDDocument document = null;
+        try {
+            document = new PDDocument();
+            PDFont font = PDType1Font.HELVETICA;
+            PDPage page = new PDPage(PDRectangle.A4);
+            page.setRotation(90);
+            document.addPage(page);
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+            //Setting the non stroking color
+            contentStream.setNonStrokingColor(Color.ORANGE);
+
+
+            // One story cards
+
+            contentStream.addRect(25, 25, 272, 395);
+            // For icon
+            contentStream.addRect(30, 30, 75, 385);
+            contentStream.addRect(30, 30, 75, 75);
+            contentStream.addRect(105, 30, 187, 385);
+
+            // contentStream.addRect(25, 420, 190, 395);
+
+            //Drawing a rectangle
+            contentStream.fillAndStroke();
+
+            writeStoryNumber(document, page, contentStream);
+
+            //Closing the ContentStream object
+            contentStream.close();
+
+            document.save(outfile);
+
+        } finally {
+            if (document != null) {
+                document.close();
+            }
+        }
+        return document;
+    }
+
+    private void writeStoryNumber(PDDocument document, PDPage page, PDPageContentStream contentStream) throws IOException {
+        PDRectangle pageSize = page.getMediaBox();
+        float pageWidth = pageSize.getWidth();
+        contentStream.concatenate2CTM(0, 1, -1, 0, pageWidth, 0);
+
+        contentStream.beginText();
+        contentStream.setFont(PDType1Font.HELVETICA_BOLD, 30);
+        contentStream.setNonStrokingColor(Color.BLACK);
+        contentStream.newLineAtOffset(300, 530);
+        // contentStream.showText("MF-12345");
+        contentStream.endText();
+    }
+
+    private void savePDF(String outfile, PDDocument doc) throws IOException {
+        //Saving the document
+        doc.save(outfile);
+    }
+
     public static void main(String[] args) throws Exception {
         AddRectangles app = new AddRectangles();
-        app.doIt("This is a message!", "d:/test-rectangle.pdf");
+        // app.doIt("This is a message!", "d:/test-rectangle.pdf");
+        PDDocument document = app.doItSecondQuadrant("This is a message!", "d:/test-rectangle-second-quadrant.pdf");
     }
 }

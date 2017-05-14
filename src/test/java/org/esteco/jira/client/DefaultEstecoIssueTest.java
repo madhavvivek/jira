@@ -14,7 +14,7 @@ import java.util.Properties;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class EstecoIssueTest {
+public class DefaultEstecoIssueTest {
 
     private BasicCredentials credentials;
     private JiraClient jiraClient;
@@ -35,16 +35,16 @@ public class EstecoIssueTest {
     @Test
     public void testIssueParameters() throws Exception {
         Issue issue = jiraClient.getIssue("MF-10241");
-        EstecoIssue estecoIssue = new EstecoIssue(issue);
+        DefaultEstecoIssue defaultEstecoIssue = new DefaultEstecoIssue(issue);
 
-        assertEquals("MF-10241", estecoIssue.getKey());
-        assertEquals("Story", estecoIssue.getIssueType().getName());
-        assertEquals("Major", estecoIssue.getPriority().getName());
-        assertEquals("Vivek Madhav", estecoIssue.getAssignee().getDisplayName());
-        assertEquals("Marco Carriglio", estecoIssue.getReporter().getDisplayName());
-        assertEquals("Integration Nodes", estecoIssue.getComponents().get(0).getName());
-        assertNotNull(estecoIssue.getSummary());
-        assertNotNull(estecoIssue.getIssueTypeIconUrl());
-        assertNotNull(estecoIssue.getPriorityIconUrl());
+        assertEquals("MF-10241", defaultEstecoIssue.getKey());
+        assertEquals("Story", defaultEstecoIssue.getIssueType().getName());
+        assertEquals("Major", defaultEstecoIssue.getPriority().getName());
+        assertEquals("Vivek Madhav", defaultEstecoIssue.getAssignee().getDisplayName());
+        assertEquals("Marco Carriglio", defaultEstecoIssue.getReporter().getDisplayName());
+        assertEquals("Integration Nodes", defaultEstecoIssue.getComponents().get(0).getName());
+        assertNotNull(defaultEstecoIssue.getSummary());
+        assertNotNull(defaultEstecoIssue.getIssueTypeIconUrl());
+        assertNotNull(defaultEstecoIssue.getPriorityIconUrl());
     }
 }

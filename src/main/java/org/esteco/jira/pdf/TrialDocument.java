@@ -10,7 +10,7 @@ import org.apache.pdfbox.util.Matrix;
 
 import java.io.IOException;
 
-public class Document {
+public class TrialDocument {
 
     public void doIt(String message, String outfile) throws IOException {
         // the document
@@ -69,7 +69,7 @@ public class Document {
     }
 
     public static void main(String[] args) throws Exception {
-        Document app = new Document();
+        TrialDocument app = new TrialDocument();
         app.doIt("This is a message string", "d:/test.pdf");
     }
 }

@@ -1,72 +1,31 @@
 package org.esteco.jira.client;
 
-import net.rcarz.jiraclient.*;
+import net.rcarz.jiraclient.Component;
+import net.rcarz.jiraclient.IssueType;
+import net.rcarz.jiraclient.Priority;
+import net.rcarz.jiraclient.User;
 
 import java.util.List;
 
-public class EstecoIssue {
+public interface EstecoIssue {
 
-    private final String key;
-    private final String summary;
-    private final Priority priority;
-    private final String priorityIconUrl;
-    private final IssueType issueType;
-    private final String issueTypeIconUrl;
-    private final User assignee;
-    private final User reporter;
-    private final List<String> labels;
-    private final List<Component> components;
+    String getKey();
 
-    public EstecoIssue(Issue issue) {
-        key = issue.getKey();
-        summary = issue.getSummary();
-        priority = issue.getPriority();
-        priorityIconUrl = priority.getIconUrl();
-        assignee = issue.getAssignee();
-        reporter = issue.getReporter();
-        labels = issue.getLabels();
-        components = issue.getComponents();
-        issueType = issue.getIssueType();
-        issueTypeIconUrl = issueType.getIconUrl();
-    }
+    String getSummary();
 
-    public String getKey() {
-        return key;
-    }
+    Priority getPriority();
 
-    public String getSummary() {
-        return summary;
-    }
+    String getPriorityIconUrl();
 
-    public Priority getPriority() {
-        return priority;
-    }
+    IssueType getIssueType();
 
-    public String getPriorityIconUrl() {
-        return priorityIconUrl;
-    }
+    String getIssueTypeIconUrl();
 
-    public IssueType getIssueType() {
-        return issueType;
-    }
+    User getAssignee();
 
-    public String getIssueTypeIconUrl() {
-        return issueTypeIconUrl;
-    }
+    User getReporter();
 
-    public User getAssignee() {
-        return assignee;
-    }
+    List<String> getLabels();
 
-    public User getReporter() {
-        return reporter;
-    }
-
-    public List<String> getLabels() {
-        return labels;
-    }
-
-    public List<Component> getComponents() {
-        return components;
-    }
+    List<Component> getComponents();
 }
